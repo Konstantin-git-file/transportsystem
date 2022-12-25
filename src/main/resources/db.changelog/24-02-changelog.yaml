@@ -1,0 +1,132 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1671894431890-1
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_user
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                  name: firstname
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: lastname
+                  type: VARCHAR(255)
+              - column:
+                  name: passport_id
+                  type: BIGINT
+              - column:
+                  name: eticket_id
+                  type: BIGINT
+            tableName: User
+  - changeSet:
+      id: 1671894431890-2
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_currentlocation
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: localdatetime
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: cityandstation
+                  type: INTEGER
+            tableName: currentlocation
+  - changeSet:
+      id: 1671894431890-3
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_destination
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: localdatetime
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: cityandstation
+                  type: INTEGER
+            tableName: destination
+  - changeSet:
+      id: 1671894431890-4
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_passport
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: serial
+                  type: VARCHAR(255)
+              - column:
+                  name: number
+                  type: VARCHAR(255)
+              - column:
+                  name: gender
+                  type: VARCHAR(255)
+            tableName: passport
+  - changeSet:
+      id: 1671894431890-5
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_ticket
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: passport_id
+                  type: BIGINT
+              - column:
+                  name: booked
+                  type: BOOLEAN
+              - column:
+                  name: paid
+                  type: BOOLEAN
+              - column:
+                  name: current_location_id
+                  type: BIGINT
+              - column:
+                  name: destination_location_id
+                  type: BIGINT
+            tableName: ticket
+

@@ -7,12 +7,14 @@ import lombok.experimental.FieldDefaults;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
 public class Ticket {
 
     @EqualsAndHashCode.Include
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     Long id;
 

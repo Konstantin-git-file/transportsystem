@@ -9,13 +9,14 @@ import lombok.experimental.FieldDefaults;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
 public class User {
 
     @EqualsAndHashCode.Include
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
 
     @NotNull(message = "Name may not be null")

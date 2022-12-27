@@ -1,3 +1,13 @@
 databaseChangeLog:
-- include:
-    file: db.changelog/changeset/change-column-user.yaml
+    - changeSet:
+          id: 2022_12_21_initial_create_tables
+          author: eku-code
+          changes:
+              - sqlFile:
+                    dbms: postgresql
+                    encoding: utf8
+                    endDelimiter: \n/\s*\n|\n/\s*$
+                    path: db.changelog/sql/2022_12_21_initial_create_tables.sql
+                    relativeToChangelogFile: true
+                    splitStatements: true
+                    stripComments: true

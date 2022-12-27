@@ -12,26 +12,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
-
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class CurrentLocation {
 
-    @EqualsAndHashCode.Include
-    @Id
-    @Column(name = "id", nullable = false)
-    private Long id;
+  @EqualsAndHashCode.Include
+  @Id
+  @Column(name = "id", nullable = false)
+  private Long id;
 
-    private LocalDateTime localDateTime;
-    private CityAndStation cityAndStation;
+  private LocalDateTime localDateTime;
+  private CityAndStation cityAndStation;
 
-    @Autowired
-    public CurrentLocation(LocalDateTime localDateTime, CityAndStation cityAndStation) {
-        this.localDateTime = localDateTime;
-        this.cityAndStation = cityAndStation;
-    }
+  @Autowired
+  public CurrentLocation(LocalDateTime localDateTime, CityAndStation cityAndStation) {
+    this.localDateTime = localDateTime;
+    this.cityAndStation = cityAndStation;
+  }
 }

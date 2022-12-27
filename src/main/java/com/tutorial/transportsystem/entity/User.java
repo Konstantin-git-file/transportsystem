@@ -5,31 +5,27 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class User {
 
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long id;
+  @EqualsAndHashCode.Include
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  Long id;
 
-    @NotNull(message = "Name may not be null")
-    String firstname;
+  @NotNull(message = "Name may not be null")
+  String firstname;
 
-    @NotNull(message = "lastname may not be null")
-    String lastname;
+  @NotNull(message = "lastname may not be null")
+  String lastname;
 
-    @OneToOne
-    Passport passport;
+  @OneToOne Passport passport;
 
-    @OneToOne
-    @JoinColumn(name = "eticket_id")
-    Ticket ticket;
-
+  @OneToOne
+  @JoinColumn(name = "eticket_id")
+  Ticket ticket;
 }

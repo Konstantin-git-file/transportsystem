@@ -9,38 +9,36 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class Ticket {
 
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    Long id;
+  @EqualsAndHashCode.Include
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @Column(name = "id", nullable = false)
+  Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    User user;
+  @OneToOne
+  @JoinColumn(name = "user_id")
+  User user;
 
-    @OneToOne
-    @JoinColumn(name = "passport_id")
-    Passport passport;
+  @OneToOne
+  @JoinColumn(name = "passport_id")
+  Passport passport;
 
-    Boolean booked;
+  Boolean booked;
 
-    Boolean paid;
+  Boolean paid;
 
-//    @ManyToOne
-//    @JoinColumn(name = "city_and_station_ID")
-//    @Enumerated (EnumType.STRING) // не совсем понял там можно или нет..
-//    CityAndStation cityAndStation;
+  //    @ManyToOne
+  //    @JoinColumn(name = "city_and_station_ID")
+  //    @Enumerated (EnumType.STRING) // не совсем понял там можно или нет..
+  //    CityAndStation cityAndStation;
 
-    @OneToOne
-    @JoinColumn(name = "current_location_id")
-    CurrentLocation currentLocation;
+  @OneToOne
+  @JoinColumn(name = "current_location_id")
+  CurrentLocation currentLocation;
 
-    @OneToOne
-    @JoinColumn(name = "destination_location_id")
-    Destination destination;
-
+  @OneToOne
+  @JoinColumn(name = "destination_location_id")
+  Destination destination;
 }

@@ -1,7 +1,6 @@
 package com.tutorial.transportsystem.entity;
 
 import com.tutorial.transportsystem.listener.BaseDateEntityListener;
-import com.tutorial.transportsystem.service.dto.TownDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,24 +11,27 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Entity
-@Table(name = "current_location")
+@Table(name = "stations")
 @Accessors(chain = true)
 @EntityListeners(value = BaseDateEntityListener.class)
 @NoArgsConstructor
 
-public class CurrentLocation extends BaseDateEntity {
+public class Station extends BaseDateEntity {
 
     @Id
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "town_town_id")
-    private Town town;
+    @Column(name = "station", nullable = false)
+    private String stationName;
+
+    @ManyToOne
+    Town townEntities;
 
     @Builder
-    public CurrentLocation(TownDto townDto) {
-        this.town = town;
+    public Station(Long id, String stationName, Town townEntities) {
+        this.id = id;
+        this.stationName = stationName;
+        this.townEntities = townEntities;
     }
 }
-

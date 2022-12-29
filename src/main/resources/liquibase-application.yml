@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    password: mypassword
+    url: jdbc:postgresql://localhost:5432/transport_system_db
+    username: myusername
+  jpa:
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:db.changelog/db.changelog-master.yaml
+    database-change-log-lock-table: transport_system_dbLOGLOCKTABLE
+    database-change-log-table: transport_system_dbLOGTABLE
+    default-schema: transport_system
+    enabled: true

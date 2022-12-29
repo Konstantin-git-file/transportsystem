@@ -1,0 +1,320 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1672311817323-1
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: hibernate_sequence
+            startValue: 1
+  - changeSet:
+      id: 1672311817323-2
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_current_location
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATE
+              - column:
+                  name: updated_at
+                  type: DATE
+              - column:
+                  name: town_town_id
+                  type: BIGINT
+            tableName: current_location
+  - changeSet:
+      id: 1672311817323-3
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_destination
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATE
+              - column:
+                  name: updated_at
+                  type: DATE
+              - column:
+                  name: town_town_id
+                  type: BIGINT
+            tableName: destination
+  - changeSet:
+      id: 1672311817323-4
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_passport
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATE
+              - column:
+                  name: updated_at
+                  type: DATE
+              - column:
+                  name: serial
+                  type: VARCHAR(255)
+              - column:
+                  name: number
+                  type: VARCHAR(255)
+              - column:
+                  name: gender
+                  type: VARCHAR(255)
+            tableName: passport
+  - changeSet:
+      id: 1672311817323-5
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_stations
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATE
+              - column:
+                  name: updated_at
+                  type: DATE
+              - column:
+                  constraints:
+                    nullable: false
+                  name: station
+                  type: VARCHAR(255)
+              - column:
+                  name: townEntities_town_id
+                  type: BIGINT
+            tableName: stations
+  - changeSet:
+      id: 1672311817323-6
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_ticket
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATE
+              - column:
+                  name: updated_at
+                  type: DATE
+              - column:
+                  name: user_id
+                  type: BIGINT
+              - column:
+                  name: passport_id
+                  type: BIGINT
+              - column:
+                  name: booked
+                  type: BOOLEAN
+              - column:
+                  name: paid
+                  type: BOOLEAN
+              - column:
+                  name: current_location_id
+                  type: BIGINT
+              - column:
+                  name: destination_location_id
+                  type: BIGINT
+            tableName: ticket
+  - changeSet:
+      id: 1672311817323-7
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_town
+                  name: town_id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATE
+              - column:
+                  name: updated_at
+                  type: DATE
+              - column:
+                  constraints:
+                    nullable: false
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: priority
+                  type: INT
+            tableName: town
+  - changeSet:
+      id: 1672311817323-8
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_users
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATE
+              - column:
+                  name: updated_at
+                  type: DATE
+              - column:
+                  name: first_name
+                  type: VARCHAR(255)
+              - column:
+                  name: last_name
+                  type: VARCHAR(255)
+              - column:
+                  name: passport_id
+                  type: BIGINT
+              - column:
+                  name: ticket_id
+                  type: BIGINT
+            tableName: users
+  - changeSet:
+      id: 1672311817323-9
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: town_town_id
+            baseTableName: current_location
+            constraintName: FK_CURRENT_LOCATION_ON_TOWN_TOWN
+            referencedColumnNames: town_id
+            referencedTableName: town
+  - changeSet:
+      id: 1672311817323-10
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: town_town_id
+            baseTableName: destination
+            constraintName: FK_DESTINATION_ON_TOWN_TOWN
+            referencedColumnNames: town_id
+            referencedTableName: town
+  - changeSet:
+      id: 1672311817323-11
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: townEntities_town_id
+            baseTableName: stations
+            constraintName: FK_STATIONS_ON_TOWNENTITIES_TOWN
+            referencedColumnNames: town_id
+            referencedTableName: town
+  - changeSet:
+      id: 1672311817323-12
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: current_location_id
+            baseTableName: ticket
+            constraintName: FK_TICKET_ON_CURRENT_LOCATION
+            referencedColumnNames: id
+            referencedTableName: current_location
+  - changeSet:
+      id: 1672311817323-13
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: destination_location_id
+            baseTableName: ticket
+            constraintName: FK_TICKET_ON_DESTINATION_LOCATION
+            referencedColumnNames: id
+            referencedTableName: destination
+  - changeSet:
+      id: 1672311817323-14
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: passport_id
+            baseTableName: ticket
+            constraintName: FK_TICKET_ON_PASSPORT
+            referencedColumnNames: id
+            referencedTableName: passport
+  - changeSet:
+      id: 1672311817323-15
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: ticket
+            constraintName: FK_TICKET_ON_USER
+            referencedColumnNames: id
+            referencedTableName: users
+  - changeSet:
+      id: 1672311817323-16
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: passport_id
+            baseTableName: users
+            constraintName: FK_USERS_ON_PASSPORT
+            referencedColumnNames: id
+            referencedTableName: passport
+  - changeSet:
+      id: 1672311817323-17
+      author: Елизаровы (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: ticket_id
+            baseTableName: users
+            constraintName: FK_USERS_ON_TICKET
+            referencedColumnNames: id
+            referencedTableName: ticket
+

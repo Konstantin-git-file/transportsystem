@@ -1,31 +1,48 @@
 package com.tutorial.transportsystem.entity;
 
+import com.tutorial.transportsystem.listener.BaseDateEntityListener;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+
+@Getter
+@Setter
 @Entity
+@Table (name = "users")
+@Accessors (chain = true)
+@EntityListeners(value = BaseDateEntityListener.class)
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class User {
 
-  @EqualsAndHashCode.Include
+public class User extends BaseDateEntity {
+
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  Long id;
+  private Long id;
 
-  @NotNull(message = "Name may not be null")
-  String firstname;
+  @Column(name = "first_name")
+  private String firstname;
 
-  @NotNull(message = "lastname may not be null")
-  String lastname;
-
-  @OneToOne Passport passport;
+  @Column(name = "last_name")
+  private String lastname;
 
   @OneToOne
-  @JoinColumn(name = "eticket_id")
+  @JoinColumn(name = "passport_id")
+  Passport passport;
+
+  @OneToOne
+  @JoinColumn(name = "ticket_id")
   Ticket ticket;
+
+  @Builder
+  public User(Long id, String firstname, String lastname, Passport passport, Ticket ticket) {
+    this.id = id;
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.passport = passport;
+    this.ticket = ticket;
+  }
 }

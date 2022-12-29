@@ -1,44 +1,61 @@
 package com.tutorial.transportsystem.entity;
 
+import com.tutorial.transportsystem.listener.BaseDateEntityListener;
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Getter
+@Setter
 @Entity
+@Table(name = "ticket")
+@Accessors(chain = true)
+@EntityListeners(value = BaseDateEntityListener.class)
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class Ticket {
 
-  @EqualsAndHashCode.Include
-  @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
-  @Column(name = "id", nullable = false)
-  Long id;
+public class Ticket extends BaseDateEntity {
 
-  @OneToOne
-  @JoinColumn(name = "user_id")
-  User user;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id", nullable = false)
+    Long id;
 
-  @OneToOne
-  @JoinColumn(name = "passport_id")
-  Passport passport;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    User user;
 
-  Boolean booked;
+    @OneToOne
+    @JoinColumn(name = "passport_id")
+    Passport passport;
 
-  Boolean paid;
+    Boolean booked;
 
-  //    @ManyToOne
-  //    @JoinColumn(name = "city_and_station_ID")
-  //    @Enumerated (EnumType.STRING) // не совсем понял там можно или нет..
-  //    CityAndStation cityAndStation;
+    Boolean paid;
 
-  @OneToOne
-  @JoinColumn(name = "current_location_id")
-  CurrentLocation currentLocation;
+    //    @ManyToOne
+    //    @JoinColumn(name = "city_and_station_ID")
+    //    @Enumerated (EnumType.STRING) // не совсем понял там можно или нет..
+    //    CityAndStation cityAndStation;
 
-  @OneToOne
-  @JoinColumn(name = "destination_location_id")
-  Destination destination;
+    @OneToOne
+    @JoinColumn(name = "current_location_id")
+    CurrentLocation currentLocation;
+
+    @OneToOne
+    @JoinColumn(name = "destination_location_id")
+    Destination destination;
+
+    @Builder
+    public Ticket(Long id, User user, Passport passport, Boolean booked, Boolean paid, CurrentLocation currentLocation, Destination destination) {
+        this.id = id;
+        this.user = user;
+        this.passport = passport;
+        this.booked = booked;
+        this.paid = paid;
+        this.currentLocation = currentLocation;
+        this.destination = destination;
+    }
 }

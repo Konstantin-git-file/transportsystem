@@ -1,8 +1,9 @@
 spring:
   datasource:
-    password: mypassword
     url: jdbc:postgresql://localhost:5432/transport_system_db
-    username: myusername
+    username: postgres
+    password: 3791
+
   jpa:
     hibernate:
       ddl-auto: none

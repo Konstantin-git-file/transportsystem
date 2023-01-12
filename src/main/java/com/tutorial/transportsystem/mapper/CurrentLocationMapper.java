@@ -1,7 +1,7 @@
-package com.tutorial.transportsystem.service.mapper;
+package com.tutorial.transportsystem.mapper;
 
 import com.tutorial.transportsystem.entity.CurrentLocation;
-import com.tutorial.transportsystem.service.dto.CurrentLocationDto;
+import com.tutorial.transportsystem.dto.CurrentLocationDto;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "cdi")

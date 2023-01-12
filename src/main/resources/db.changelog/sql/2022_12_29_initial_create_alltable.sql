@@ -29,6 +29,16 @@ CREATE TABLE passport
     CONSTRAINT pk_passport PRIMARY KEY (id)
 );
 
+CREATE TABLE town
+(
+    town_id    BIGINT       NOT NULL,
+    created_at date,
+    updated_at date,
+    name       VARCHAR(255) NOT NULL,
+    priority   INTEGER      NOT NULL,
+    CONSTRAINT pk_town PRIMARY KEY (town_id)
+);
+
 CREATE TABLE stations
 (
     id                   BIGINT       NOT NULL,
@@ -36,7 +46,7 @@ CREATE TABLE stations
     updated_at           date,
     station              VARCHAR(255) NOT NULL,
     townEntities_town_id BIGINT,
-    CONSTRAINT pk_stations PRIMARY KEY (id)
+    CONSTRAINT pk_stations PRIMARY KEY (id) ---TODO town_id fk_constraint
 );
 
 CREATE TABLE ticket
@@ -53,15 +63,6 @@ CREATE TABLE ticket
     CONSTRAINT pk_ticket PRIMARY KEY (id)
 );
 
-CREATE TABLE town
-(
-    town_id    BIGINT       NOT NULL,
-    created_at date,
-    updated_at date,
-    name       VARCHAR(255) NOT NULL,
-    priority   INTEGER      NOT NULL,
-    CONSTRAINT pk_town PRIMARY KEY (town_id)
-);
 
 CREATE TABLE users
 (

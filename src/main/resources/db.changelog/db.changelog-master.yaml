@@ -1,13 +1,80 @@
 databaseChangeLog:
-    - changeSet:
-          id: 2022_12_21_initial_create_tables
-          author: eku-code
-          changes:
-              - sqlFile:
-                    dbms: postgresql
-                    encoding: utf8
-                    endDelimiter: \n/\s*\n|\n/\s*$
-                    path: db.changelog/sql/2022_12_21_initial_create_tables.sql
-                    relativeToChangelogFile: true
-                    splitStatements: true
-                    stripComments: true
+  - changeSet: ##TODO удалить set
+      id: 2022_12_21_initial_create_tables
+      author: eku-code
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf8
+            endDelimiter: \n/\s*\n|\n/\s*$
+            path: db.changelog/sql/2022_12_21_initial_create_tables.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 2022_12_29_initial_create_alltable
+      author: konstantin
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf8
+            endDelimiter: \n/\s*\n|\n/\s*$
+            path: db.changelog/sql/2022_12_29_initial_create_alltable.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+  #  - changeSet:
+  #      id: 2023_01_02_drop_t_town.sql
+  #      author: konstantin
+  #      changes:
+  #        - sqlFile:
+  #            dbms: postgresql
+  #            encoding: utf8
+  #            endDelimiter: \n/\s*\n|\n/\s*$
+  #            path: db.changelog/sql/2023_01_02_drop_t_town.sql
+  #            relativeToChangelogFile: true
+  #            splitStatements: true
+  #            stripComments: true
+  - changeSet:
+      id: 2023_01_02_drop_t_town.sql
+      author: konstantin
+      comment: drop t_town if exists
+      changes:
+        - dropTable:
+            cascadeConstraints: true
+            catalogName: transport_system_db
+            schemaName: transport_system
+            tableName: t_town
+  - changeSet:
+      id: 2023_01_05_add_column_login_to_users
+      author: konstantin
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: login
+                  type: varchar(50)
+
+  - changeSet:
+      id: 2023_01_05_add_column_password_and_email_to_users
+      author: konstantin
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: password
+                  type: varchar(50)
+              - column:
+                  name: email
+                  type: varchar(50)
+
+  - changeSet:
+      id: 2023_01_11_rename_column_login_to_username_in_t_user.sql
+      author: konstantin
+      changes:
+        - renameColumn:
+            tableName: t_user
+            oldColumnName: login
+            newColumnName: username

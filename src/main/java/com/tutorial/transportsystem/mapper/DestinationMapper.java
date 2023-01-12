@@ -1,7 +1,7 @@
-package com.tutorial.transportsystem.service.mapper;
+package com.tutorial.transportsystem.mapper;
 
 import com.tutorial.transportsystem.entity.Destination;
-import com.tutorial.transportsystem.service.dto.DestinationDto;
+import com.tutorial.transportsystem.dto.DestinationDto;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "cdi")

@@ -2,7 +2,6 @@ package com.tutorial.transportsystem.entity;
 
 import com.tutorial.transportsystem.listener.BaseDateEntityListener;
 import jakarta.persistence.*;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +10,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Entity
-@Table(name = "destination")
+@Table(name = "t_destination")
 @Accessors(chain = true)
 @EntityListeners(value = BaseDateEntityListener.class)
 @NoArgsConstructor
@@ -30,9 +29,4 @@ public class Destination extends BaseDateEntity {
         this.town = town;
     }
 
-    @Builder
-    public Destination(Long id, Town town) {
-        this.id = id;
-        this.town = town;
-    }
 }

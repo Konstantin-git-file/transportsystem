@@ -1,24 +1,25 @@
-package com.tutorial.transportsystem.service.mapper;
+package com.tutorial.transportsystem.mapper;
 
+import com.tutorial.transportsystem.dto.UserDto;
 import com.tutorial.transportsystem.entity.User;
-import com.tutorial.transportsystem.service.dto.UserDto;
 import org.mapstruct.*;
 
 import java.util.List;
 
 @Mapper(
         unmappedTargetPolicy = ReportingPolicy.IGNORE,
-        componentModel = "cdi"
+        componentModel = "spring",
+        uses = {PassportMapper.class, TicketMapper.class}
 )
 public interface UserMapper {
 
-    User userDtoToUser(UserDto userDto);
-
-    List<User> userDTOsToUser(List<UserDto> userDTOs);
-
     UserDto userToUserDto(User user);
 
+    User userDtoToUser(UserDto userDto);
+
     List<UserDto> usersToUserDTO(List<User> users);
+
+    List<User> userDTOsToUser(List<UserDto> userDTOs);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     User updateUserFromUserDto(UserDto userDto, @MappingTarget User user);

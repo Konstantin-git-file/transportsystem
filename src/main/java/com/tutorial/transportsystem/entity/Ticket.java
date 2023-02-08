@@ -14,32 +14,30 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(value = BaseDateEntityListener.class)
 @NoArgsConstructor
-
 public class Ticket extends BaseDateEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @Column(name = "id", nullable = false)
+  Long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    User user;
+  @OneToOne
+  @JoinColumn(name = "user_id")
+  User user;
 
-    @OneToOne
-    @JoinColumn(name = "passport_id")
-    Passport passport;
+  @OneToOne
+  @JoinColumn(name = "passport_id")
+  Passport passport;
 
-    Boolean booked;
+  Boolean booked;
 
-    Boolean paid;
+  Boolean paid;
 
-    @OneToOne
-    @JoinColumn(name = "current_location_id")
-    CurrentLocation currentLocation;
+  @OneToOne
+  @JoinColumn(name = "current_location_id")
+  CurrentLocation currentLocation;
 
-    @OneToOne
-    @JoinColumn(name = "destination_location_id")
-    Destination destination;
-
+  @OneToOne
+  @JoinColumn(name = "destination_location_id")
+  Destination destination;
 }

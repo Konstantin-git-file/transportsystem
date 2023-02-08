@@ -9,11 +9,13 @@ import java.time.LocalDateTime;
 
 @Data
 public class StationDto implements Serializable {
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
-    private final LocalDateTime createdAt;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
-    private final LocalDateTime updatedAt;
-    private final Long id;
-    private final String stationName;
-    private final Town town;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+  private LocalDateTime createdAt;
+
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+  private LocalDateTime updatedAt;
+
+  private Long id;
+  private String stationName;
+  private Town town;
 }

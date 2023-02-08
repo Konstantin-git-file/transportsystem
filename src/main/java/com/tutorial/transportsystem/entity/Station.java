@@ -14,17 +14,14 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(value = BaseDateEntityListener.class)
 @NoArgsConstructor
-
 public class Station extends BaseDateEntity {
 
-    @Id
-    @Column(name = "id", nullable = false)
-    private Long id;
+  @Id
+  @Column(name = "id", nullable = false)
+  private Long id;
 
-    @Column(name = "station", nullable = false)
-    private String stationName;
+  @Column(name = "station", nullable = false)
+  private String stationName;
 
-    @ManyToOne
-    Town townEntities;
-
+  @ManyToOne Town townEntities;
 }

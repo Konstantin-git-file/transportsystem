@@ -1,6 +1,5 @@
 package com.tutorial.transportsystem.repository;
 
-import com.tutorial.transportsystem.dto.UserDto;
 import com.tutorial.transportsystem.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,16 +7,13 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository <UserDto, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    //TODO Optional?
-    User findByUsername(String username); // User findByLogin(String username);
+  Optional<User> findByLogin(String login);
 
-    Boolean existsByUsername(String username);
+  Boolean existsByLogin(String login);
 
-    User findByEmail(String email);
+  Optional<User> findByEmail(String email);
 
-    Boolean existsByEmail(String email);
-
-    Optional<UserDto> findById();
+  Boolean existsByEmail(String email);
 }

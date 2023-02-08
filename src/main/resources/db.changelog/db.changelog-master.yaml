@@ -1,5 +1,5 @@
 databaseChangeLog:
-  - changeSet: ##TODO удалить set
+  - changeSet:
       id: 2022_12_21_initial_create_tables
       author: eku-code
       changes:
@@ -11,18 +11,18 @@ databaseChangeLog:
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
-  - changeSet:
-      id: 2022_12_29_initial_create_alltable
-      author: konstantin
-      changes:
-        - sqlFile:
-            dbms: postgresql
-            encoding: utf8
-            endDelimiter: \n/\s*\n|\n/\s*$
-            path: db.changelog/sql/2022_12_29_initial_create_alltable.sql
-            relativeToChangelogFile: true
-            splitStatements: true
-            stripComments: true
+#  - changeSet:
+#      id: 2022_12_29_initial_create_alltable
+#      author: konstantin
+#      changes:
+#        - sqlFile:
+#            dbms: postgresql
+#            encoding: utf8
+#            endDelimiter: \n/\s*\n|\n/\s*$
+#            path: db.changelog/sql/2022_12_29_initial_create_alltable.sql
+#            relativeToChangelogFile: true
+#            splitStatements: true
+#            stripComments: true
   #  - changeSet:
   #      id: 2023_01_02_drop_t_town.sql
   #      author: konstantin
@@ -78,3 +78,34 @@ databaseChangeLog:
             tableName: t_user
             oldColumnName: login
             newColumnName: username
+
+#  - changeSet:
+#      id: 2023_02_07_initial_create_tables_user_role.sql
+#        author: ekoCode
+#        changes:
+#          - createTable:
+#              tableName: t_user_role
+#              columns:
+#                - column:
+#                    name: id
+#                    type: int
+#                    autoIncrement: true
+#                    constraints:
+#                      primaryKey: true
+#                      nullable: false
+#                - column:
+#                    name: user_id
+#                    type: int
+#                    constraints:
+#                      foreignKey:
+#                        referencedColumnNames: id
+#                        referencedTableName: transport_system.t_user
+#                      nullable: false
+#                - column:
+#                    name: role_id
+#                    type: int
+#                    constraints:
+#                      foreignKey:
+#                        referencedColumnNames: id
+#                        referencedTableName: transport_system.t_role
+#                      nullable: false

@@ -14,10 +14,11 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class BaseDateEntity {
 
-    @Column(name = "created_at", updatable=false)
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-    @Column(name = "updated_at")
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
+  @Column(name = "created_at", updatable = false)
+  @CreationTimestamp
+  private LocalDateTime createdAt;
+
+  @Column(name = "updated_at")
+  @UpdateTimestamp
+  private LocalDateTime updatedAt;
 }

@@ -2,26 +2,21 @@ package com.tutorial.transportsystem.service;
 
 import com.tutorial.transportsystem.dto.UserDto;
 import com.tutorial.transportsystem.entity.User;
-import com.tutorial.transportsystem.exception.RecordNotFoundException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-//unittest
+// unittest
 @Service
-public interface UserService extends UserDetailsService {
-    //pageable
+public interface UserService {
 
     void createUserDto(UserDto userDto);
 
-    UserDto updateUserDto(Long id, UserDto userDto);
+//    UserDto updateUserDto(Long id, UserDto userDto);
 
-    UserDto getUserById(Long id) throws RecordNotFoundException;
+//    UserDto getUserById(Long id);
 
-    Page<UserDto> findAllUserDtos(Pageable pageable);
+//    List<UserDto> findAllUserDtos(Integer limit, Integer offset);
 
-    void deleteUserDto(Long id) throws RecordNotFoundException;
+//    void deleteUserDto(Long id);
 
     User findUserByEmail(String email);
 }

@@ -15,35 +15,33 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @EntityListeners(value = BaseDateEntityListener.class)
 @NoArgsConstructor
-
 public class Passport extends BaseDateEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @Column(name = "id", nullable = false)
+  private Long id;
 
-    @Pattern(regexp = "^\\d{10}\\D")
-    @Column(name = "serial")
-    private String serial;
+  @Pattern(regexp = "^\\d{10}\\D")
+  @Column(name = "serial")
+  private String serial;
 
-    @Pattern(regexp = "^\\d{10}\\D")
-    @Column(name = "number")
-    private String number;
+  @Pattern(regexp = "^\\d{10}\\D")
+  @Column(name = "number")
+  private String number;
 
-    @Pattern(regexp = "(?:m|M|male|Male|f|F|female|Female|FEMALE|MALE)$")
-    @Column(name = "gender")
-    private String gender;
+  @Pattern(regexp = "(?:m|M|male|Male|f|F|female|Female|FEMALE|MALE)$")
+  @Column(name = "gender")
+  private String gender;
 
+  @OneToOne(mappedBy = "passport", optional = false)
+  private User user;
 
-    @OneToOne(mappedBy = "passport", optional = false)
-    private User user;
+  public User getUser() {
+    return user;
+  }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+  public void setUser(User user) {
+    this.user = user;
+  }
 }

@@ -46,7 +46,7 @@ CREATE TABLE stations
     updated_at           date,
     station              VARCHAR(255) NOT NULL,
     townEntities_town_id BIGINT,
-    CONSTRAINT pk_stations PRIMARY KEY (id) ---TODO town_id fk_constraint
+    CONSTRAINT pk_stations PRIMARY KEY (id) ---
 );
 
 CREATE TABLE ticket

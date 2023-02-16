@@ -24,7 +24,7 @@ import java.util.Set;
 public class User extends BaseDateEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Size(min = 1, max = 50)
@@ -34,7 +34,7 @@ public class User extends BaseDateEntity {
   @JsonIgnore
   @NotNull
   @NotNull(message = "Password can't be null")
-  @Size(min = 6, max = 12, message = "Password should contain 6 to 12 character only")
+  @Size(min = 6, max = 200, message = "Password should contain 6 to 12 character only")
   private String password;
 
   @Size(min = 5, max = 100)
@@ -63,7 +63,10 @@ public class User extends BaseDateEntity {
   @JoinColumn(name = "ticket_id")
   private Ticket ticket;
 
-  public User(String username, String email, String encode) {
-    super();
+  public User(String login, String email, String encode) {
+    this.login = login;
+    this.email = email;
+    this.password = encode;
   }
+
 }

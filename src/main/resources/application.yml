@@ -13,3 +13,9 @@ spring:
     database-change-log-table: transport_system_dbLOGTABLE
     default-schema: transport_system
     enabled: true
+
+  logging:
+    level:
+      org:
+        springframework:
+          security: DEBUG

@@ -1,12 +1,14 @@
-// package com.tutorial.transportsystem.mapper;
+package com.tutorial.transportsystem.mapper;
 
-// @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "cdi")
-// public interface CurrentLocationMapper {
-//    CurrentLocation currentLocationDtoToCurrentLocation(CurrentLocationDto currentLocationDto);
-//
-//    CurrentLocationDto currentLocationToCurrentLocationDto(CurrentLocation currentLocation);
-//
-//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-//    CurrentLocation updateCurrentLocationFromCurrentLocationDto(CurrentLocationDto
-// currentLocationDto, @MappingTarget CurrentLocation currentLocation);
-// }
+import com.tutorial.transportsystem.dto.CurrentLocationDto;
+import com.tutorial.transportsystem.entity.CurrentLocation;
+import org.mapstruct.Mapper;
+
+@Mapper
+public interface CurrentLocationMapper {
+    CurrentLocation currentLocationDtoToCurrentLocation(CurrentLocationDto currentLocationDto);
+
+    CurrentLocationDto currentLocationToCurrentLocationDto(CurrentLocation currentLocation);
+
+
+}

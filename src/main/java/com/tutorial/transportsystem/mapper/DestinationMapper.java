@@ -1,12 +1,14 @@
-// package com.tutorial.transportsystem.mapper;
+package com.tutorial.transportsystem.mapper;
 
-// @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "cdi")
-// public interface DestinationMapper {
-//    Destination destinationDtoToDestination(DestinationDto destinationDto);
-//
-//    DestinationDto destinationToDestinationDto(Destination destination);
-//
-//    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-//    Destination updateDestinationFromDestinationDto(DestinationDto destinationDto, @MappingTarget
-// Destination destination);
-// }
+import com.tutorial.transportsystem.dto.DestinationDto;
+import com.tutorial.transportsystem.entity.Destination;
+import org.mapstruct.Mapper;
+
+@Mapper
+public interface DestinationMapper {
+    Destination destinationDtoToDestination(DestinationDto destinationDto);
+
+    DestinationDto destinationToDestinationDto(Destination destination);
+
+
+}

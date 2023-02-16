@@ -1,7 +1,6 @@
 package com.tutorial.transportsystem.controllers;
 
 import com.tutorial.transportsystem.dto.UserDto;
-import com.tutorial.transportsystem.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class LoginController {
-
-  private UserService userService;
 
   @RequestMapping("/login")
   public String loginForm() {

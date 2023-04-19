@@ -29,9 +29,15 @@ public class Ticket extends BaseDateEntity {
   @JoinColumn(name = "passport_id")
   Passport passport;
 
-  Boolean booked;
+  @ManyToOne
+  @JoinColumn(name = "train_id")
+  Train train;
 
-  Boolean paid;
+  boolean booked;
+
+  double price;
+
+  boolean paid;
 
   @OneToOne
   @JoinColumn(name = "current_location_id")

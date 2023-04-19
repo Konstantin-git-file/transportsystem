@@ -21,6 +21,6 @@ public class CurrentLocation extends BaseDateEntity {
   private Long id;
 
   @OneToOne
-  @JoinColumn(name = "town_town_id")
+//  @JoinColumn(name = "t_town_name")
   private Town town;
 }

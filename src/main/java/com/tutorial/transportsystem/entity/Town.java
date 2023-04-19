@@ -16,13 +16,13 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 public class Town extends BaseDateEntity {
 
-  @Id
-  @Column(name = "town_id", nullable = false)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
 
-  @Column(name = "name", nullable = false)
-  private String townName;
+    @Column(name = "town_name")
+    private String townName;
 
-  @Column(name = "priority", nullable = false)
-  private int priority;
+
 }

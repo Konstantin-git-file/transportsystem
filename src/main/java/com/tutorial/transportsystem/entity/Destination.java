@@ -16,15 +16,13 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 public class Destination extends BaseDateEntity {
 
-  @Id
-  @Column(name = "id", nullable = false)
-  private Long id;
+    @Id
+    @Column(name = "id", nullable = false)
+    private Long id;
 
-  @OneToOne
-  @JoinColumn(name = "town_town_id")
-  private Town town;
+    @OneToOne
+//    @JoinColumn(name = "t_town_name")
+    private Town town;
 
-  public Destination(Town town) {
-    this.town = town;
-  }
+
 }

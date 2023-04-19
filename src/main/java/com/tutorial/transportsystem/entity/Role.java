@@ -12,13 +12,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class Role {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Enumerated(EnumType.STRING)
-    private ERole name;
+  @Enumerated(EnumType.STRING)
+  private ERole name;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<User> userList;
+  @ManyToMany(mappedBy = "roles")
+  private List<User> userList;
 }

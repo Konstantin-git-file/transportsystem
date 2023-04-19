@@ -5,7 +5,6 @@ import lombok.ToString;
 
 @Getter
 @ToString
-
 public enum ErrorEnum {
   UNKNOWN_ERROR(0, "Неизвестная ошибка"),
   USER_LOGIN_ALREADY_EXISTS(1, "Пользователь с таким логином уже существует"),

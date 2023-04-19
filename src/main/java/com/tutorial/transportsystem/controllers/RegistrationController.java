@@ -1,8 +1,8 @@
 package com.tutorial.transportsystem.controllers;
 
-import com.tutorial.transportsystem.dto.user.UserRegistrationDtoRq;
-import com.tutorial.transportsystem.dto.user.UserRegistrationDtoRs;
-import com.tutorial.transportsystem.service.UserRegistrationService;
+import com.tutorial.transportsystem.dto.userRegistrationDto.UserRegistrationDtoRq;
+import com.tutorial.transportsystem.dto.userRegistrationDto.UserRegistrationDtoRs;
+import com.tutorial.transportsystem.service.general.UserRegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

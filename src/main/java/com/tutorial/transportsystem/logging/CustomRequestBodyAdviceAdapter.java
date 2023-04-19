@@ -13,23 +13,25 @@ import java.lang.reflect.Type;
 @ControllerAdvice
 public class CustomRequestBodyAdviceAdapter extends RequestBodyAdviceAdapter {
 
-    @Autowired
-    LoggingService loggingService;
+  @Autowired LoggingService loggingService;
 
-    @Autowired
-    HttpServletRequest httpServletRequest;
+  @Autowired HttpServletRequest httpServletRequest;
 
-    @Override
-    public boolean supports(MethodParameter methodParameter, Type type, Class<? extends HttpMessageConverter<?>> aClass) {
-        return true;
-    }
+  @Override
+  public boolean supports(
+      MethodParameter methodParameter, Type type, Class<? extends HttpMessageConverter<?>> aClass) {
+    return true;
+  }
 
-    @Override
-    public Object afterBodyRead(Object body, HttpInputMessage inputMessage, MethodParameter parameter, Type targetType,
-                                Class<? extends HttpMessageConverter<?>> converterType) {
-        loggingService.logRequest(httpServletRequest, body);
+  @Override
+  public Object afterBodyRead(
+      Object body,
+      HttpInputMessage inputMessage,
+      MethodParameter parameter,
+      Type targetType,
+      Class<? extends HttpMessageConverter<?>> converterType) {
+    loggingService.logRequest(httpServletRequest, body);
 
-        return super.afterBodyRead(body, inputMessage, parameter, targetType, converterType);
-    }
+    return super.afterBodyRead(body, inputMessage, parameter, targetType, converterType);
+  }
 }
-

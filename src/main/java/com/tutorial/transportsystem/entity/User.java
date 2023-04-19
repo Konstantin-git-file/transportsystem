@@ -20,7 +20,6 @@ import java.util.Set;
 @Accessors(chain = true)
 @EntityListeners(value = BaseDateEntityListener.class)
 @NoArgsConstructor
-
 public class User extends BaseDateEntity {
 
   @Id
@@ -68,5 +67,4 @@ public class User extends BaseDateEntity {
     this.email = email;
     this.password = encode;
   }
-
 }

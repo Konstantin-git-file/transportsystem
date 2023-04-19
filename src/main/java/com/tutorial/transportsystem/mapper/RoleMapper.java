@@ -1,14 +1,13 @@
 package com.tutorial.transportsystem.mapper;
 
-import com.tutorial.transportsystem.dto.RoleDto;
+import com.tutorial.transportsystem.dto.generalDto.RoleDto;
 import com.tutorial.transportsystem.entity.Role;
 import org.mapstruct.*;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "cdi")
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring")
 public interface RoleMapper {
 
-    Role roleDtoToRole(RoleDto roleDto);
+  Role roleDtoToRole(RoleDto roleDto);
 
-    RoleDto roleToRoleDto(Role role);
-
+  RoleDto roleToRoleDto(Role role);
 }

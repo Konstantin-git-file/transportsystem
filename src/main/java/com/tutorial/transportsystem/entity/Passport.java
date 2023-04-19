@@ -20,7 +20,7 @@ public class Passport extends BaseDateEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
-  private Long id;
+  private Long passportID;
 
   @Pattern(regexp = "^\\d{10}\\D")
   @Column(name = "serial")

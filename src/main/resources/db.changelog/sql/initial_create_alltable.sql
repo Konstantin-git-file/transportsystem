@@ -1,6 +1,6 @@
 create table if not exists transport_system_dbloglocktable
 (
-    id          integer not null
+    id          integer
     primary key,
     locked      boolean not null,
     lockgranted timestamp,
@@ -39,13 +39,12 @@ create table if not exists t_passport
 
 create table if not exists t_town
 (
-    town_id    bigint       not null
+    town_id    bigint generated always as identity
     constraint pk_town
     primary key,
     created_at date,
     updated_at date,
-    name       varchar(255) not null,
-    priority   integer      not null
+    name       varchar(255) not null
     );
 
 create table if not exists t_current_location
@@ -55,8 +54,8 @@ create table if not exists t_current_location
     primary key,
     created_at   date,
     updated_at   date,
-    town_town_id bigint
-    constraint fk_current_location_on_town_town
+    town_id BIGINT
+    constraint fk_current_location_on_town_id
     references t_town
 );
 
@@ -67,8 +66,8 @@ create table if not exists t_destination
     primary key,
     created_at   date,
     updated_at   date,
-    town_town_id bigint
-    constraint fk_destination_on_town_town
+    town_id BIGINT
+    constraint fk_destination_on_town_id
     references t_town
 );
 
@@ -79,11 +78,24 @@ create table if not exists t_station
     primary key,
     created_at           date,
     updated_at           date,
-    station              varchar(255) not null,
-    townentities_town_id bigint
-    constraint fk_stations_on_townentities_town
-    references t_town
+    station              BIGINT
+
     );
+
+create table if not exists t_train
+(
+    id                   BIGINT NOT NULL,
+    trainName            VARCHAR(255),
+    departureTime        TIMESTAMP WITHOUT TIME ZONE,
+    arrival_time         TIMESTAMP WITHOUT TIME ZONE,
+    ticket_id            BIGINT,
+    seatCount            INTEGER NOT NULL,
+    bookedSeatCount      INTEGER NOT NULL,
+    currentLocation_id   BIGINT,
+    destination_id       BIGINT,
+    CONSTRAINT pk_t_train PRIMARY KEY (id)
+);
+
 
 create table if not exists t_ticket
 (
@@ -126,10 +138,6 @@ create table if not exists t_user
     email       varchar(500),
     role        integer
     );
-
-alter table t_ticket
-    add constraint fk_ticket_on_user
-        foreign key (user_id) references t_user;
 
 create table if not exists t_role
 (

@@ -11,3 +11,5 @@ databaseChangeLog:
             relativeToChangelogFile: true
             splitStatements: true
             stripComments: true
+#  - changeSet:
+#     runAlways: true

@@ -1,32 +1,47 @@
 package com.tutorial.transportsystem.entity;
 
+import com.tutorial.transportsystem.listener.BaseDateEntityListener;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Getter
+@Setter
 @Entity
+@Table(name = "t_passport")
+@Accessors(chain = true)
+@EntityListeners(value = BaseDateEntityListener.class)
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Passport extends BaseDateEntity {
 
-public class Passport {
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @Column(name = "id", nullable = false)
+  private Long passportID;
 
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    Long id;
+  @Pattern(regexp = "^\\d{10}\\D")
+  @Column(name = "serial")
+  private String serial;
 
-    @Pattern(regexp = "^\\d{10}\\D")
-    String serial;
+  @Pattern(regexp = "^\\d{10}\\D")
+  @Column(name = "number")
+  private String number;
 
-    @Pattern(regexp = "^\\d{10}\\D")
-    String number;
+  @Pattern(regexp = "(?:m|M|male|Male|f|F|female|Female|FEMALE|MALE)$")
+  @Column(name = "gender")
+  private String gender;
 
-    @Pattern(regexp = "(?:m|M|male|Male|f|F|female|Female|FEMALE|MALE)$")
-    String gender;
+  @OneToOne(mappedBy = "passport", optional = false)
+  private User user;
 
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
 }

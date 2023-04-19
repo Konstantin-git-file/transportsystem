@@ -1,3 +1,15 @@
 databaseChangeLog:
-- include:
-    file: db.changelog/changeset/change-column-user.yaml
+  - changeSet:
+      id: initial_create_tables
+      author: ekoCode
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf8
+            endDelimiter: \n/\s*\n|\n/\s*$
+            path: db.changelog/sql/initial_create_alltable.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+#  - changeSet:
+#     runAlways: true

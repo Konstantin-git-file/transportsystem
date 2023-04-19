@@ -1,37 +1,26 @@
 package com.tutorial.transportsystem.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import com.tutorial.transportsystem.listener.BaseDateEntityListener;
+import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-import java.time.LocalDateTime;
-
-
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Getter
+@Setter
 @Entity
+@Table(name = "t_current_location")
+@Accessors(chain = true)
+@EntityListeners(value = BaseDateEntityListener.class)
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+public class CurrentLocation extends BaseDateEntity {
 
-public class CurrentLocation {
+  @Id
+  @Column(name = "id", nullable = false)
+  private Long id;
 
-    @EqualsAndHashCode.Include
-    @Id
-    @Column(name = "id", nullable = false)
-    private Long id;
-
-    private LocalDateTime localDateTime;
-    private CityAndStation cityAndStation;
-
-    @Autowired
-    public CurrentLocation(LocalDateTime localDateTime, CityAndStation cityAndStation) {
-        this.localDateTime = localDateTime;
-        this.cityAndStation = cityAndStation;
-    }
+  @OneToOne
+//  @JoinColumn(name = "t_town_name")
+  private Town town;
 }

@@ -1,46 +1,49 @@
 package com.tutorial.transportsystem.entity;
 
+import com.tutorial.transportsystem.listener.BaseDateEntityListener;
 import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Getter
+@Setter
 @Entity
+@Table(name = "t_ticket")
+@Accessors(chain = true)
+@EntityListeners(value = BaseDateEntityListener.class)
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+public class Ticket extends BaseDateEntity {
 
-public class Ticket {
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @Column(name = "id", nullable = false)
+  Long id;
 
-    @EqualsAndHashCode.Include
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id", nullable = false)
-    Long id;
+  @OneToOne
+  @JoinColumn(name = "user_id")
+  User user;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    User user;
+  @OneToOne
+  @JoinColumn(name = "passport_id")
+  Passport passport;
 
-    @OneToOne
-    @JoinColumn(name = "passport_id")
-    Passport passport;
+  @ManyToOne
+  @JoinColumn(name = "train_id")
+  Train train;
 
-    Boolean booked;
+  boolean booked;
 
-    Boolean paid;
+  double price;
 
-//    @ManyToOne
-//    @JoinColumn(name = "city_and_station_ID")
-//    @Enumerated (EnumType.STRING) // не совсем понял там можно или нет..
-//    CityAndStation cityAndStation;
+  boolean paid;
 
-    @OneToOne
-    @JoinColumn(name = "current_location_id")
-    CurrentLocation currentLocation;
+  @OneToOne
+  @JoinColumn(name = "current_location_id")
+  CurrentLocation currentLocation;
 
-    @OneToOne
-    @JoinColumn(name = "destination_location_id")
-    Destination destination;
-
+  @OneToOne
+  @JoinColumn(name = "destination_location_id")
+  Destination destination;
 }

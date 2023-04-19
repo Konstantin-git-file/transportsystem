@@ -1,9 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/transport_system_db?sqlInit="SET search_path myshema"
+    url: jdbc:postgresql://localhost:5432/transport_system_db
     username: postgres
-    password: 3791
-
+    password: ----
 
   jpa:
     hibernate:

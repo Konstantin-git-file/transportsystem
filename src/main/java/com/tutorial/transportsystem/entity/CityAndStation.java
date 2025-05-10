@@ -1,21 +1,18 @@
 package com.tutorial.transportsystem.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-//не знаю хорошее это решение или нет
-
-
+@Getter
+@AllArgsConstructor
 public enum CityAndStation {
-    MOSCOW, SAINT_PETERSBURG, KAZAN;
+    LENINGRADSKY("MOSCOW"),
+    KAZANSKY("MOSCOW"),
+    YAROSLAVLSKY("MOSCOW"),
+    MOSKOVSKY("SAINT_PETERSBURG"),
+    VITEBSKY("SAINT_PETERSBURG"),
+    LADOZHSKY("SAINT_PETERSBURG"),
+    KAZAN_PASSAZHIRSKAYA("KAZAN");
 
-    public enum MOSCOW {
-        LENINGRADSKY, KAZANSKY, YAROSLAVLSKY;
-    }
-
-    public enum SAINT_PETERSBURG {
-        MOSKOVSKY, VITEBSKY, LADOZHSKY;
-    }
-
-    public enum KAZAN {
-        KAZAN_PASSAZHIRSKAYA;
-    }
+    private final String city;
 }

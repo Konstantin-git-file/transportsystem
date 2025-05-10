@@ -1,8 +1,6 @@
 package com.tutorial.transportsystem.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,18 +16,18 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class CurrentLocation {
 
     @EqualsAndHashCode.Include
     @Id
     @Column(name = "id", nullable = false)
-    private Long id;
+    Long id;
 
-    private LocalDateTime localDateTime;
-    private CityAndStation cityAndStation;
+    LocalDateTime localDateTime;
 
-    @Autowired
+    @Enumerated(EnumType.STRING)
+    CityAndStation cityAndStation;
+
     public CurrentLocation(LocalDateTime localDateTime, CityAndStation cityAndStation) {
         this.localDateTime = localDateTime;
         this.cityAndStation = cityAndStation;

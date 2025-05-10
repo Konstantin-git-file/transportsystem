@@ -9,7 +9,6 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class Ticket {
 
     @EqualsAndHashCode.Include
@@ -26,14 +25,12 @@ public class Ticket {
     @JoinColumn(name = "passport_id")
     Passport passport;
 
-    Boolean booked;
+    boolean booked;
 
-    Boolean paid;
+    boolean paid;
 
-//    @ManyToOne
-//    @JoinColumn(name = "city_and_station_ID")
-//    @Enumerated (EnumType.STRING) // не совсем понял там можно или нет..
-//    CityAndStation cityAndStation;
+    @Enumerated(EnumType.STRING)
+    CityAndStation cityAndStation;
 
     @OneToOne
     @JoinColumn(name = "current_location_id")
@@ -42,5 +39,4 @@ public class Ticket {
     @OneToOne
     @JoinColumn(name = "destination_location_id")
     Destination destination;
-
 }

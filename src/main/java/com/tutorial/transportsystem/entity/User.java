@@ -1,17 +1,15 @@
 package com.tutorial.transportsystem.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-
 public class User {
 
     @EqualsAndHashCode.Include
@@ -19,10 +17,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
 
-    @NotNull(message = "Name may not be null")
+    @NotBlank(message = "Name may not be blank")
     String firstname;
 
-    @NotNull(message = "lastname may not be null")
+    @NotBlank(message = "Lastname may not be blank")
     String lastname;
 
     @OneToOne
@@ -31,5 +29,4 @@ public class User {
     @OneToOne
     @JoinColumn(name = "eticket_id")
     Ticket ticket;
-
 }

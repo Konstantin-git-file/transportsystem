@@ -3,8 +3,6 @@ package com.tutorial.transportsystem.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
-@AllArgsConstructor
 public enum CityAndStation {
     LENINGRADSKY("MOSCOW"),
     KAZANSKY("MOSCOW"),
@@ -15,4 +13,12 @@ public enum CityAndStation {
     KAZAN_PASSAZHIRSKAYA("KAZAN");
 
     private final String city;
+
+    CityAndStation(String city) {
+        this.city = city;
+    }
+
+    public String getCity() {
+        return city;
+    }
 }

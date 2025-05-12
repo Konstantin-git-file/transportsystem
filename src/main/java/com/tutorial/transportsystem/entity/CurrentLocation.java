@@ -28,6 +28,8 @@ public class CurrentLocation {
     @Enumerated(EnumType.STRING)
     CityAndStation cityAndStation;
 
+    String city;
+
     public CurrentLocation(LocalDateTime localDateTime, CityAndStation cityAndStation) {
         this.localDateTime = localDateTime;
         this.cityAndStation = cityAndStation;

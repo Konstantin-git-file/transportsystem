@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
-
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity

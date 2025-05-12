@@ -17,10 +17,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long id;
 
-    @NotBlank(message = "Name may not be blank")
+    @NotBlank(message = "Имя не должно быть пустым")
     String firstname;
 
-    @NotBlank(message = "Lastname may not be blank")
+    @NotBlank(message = "Фамилия не должна быть пустой")
     String lastname;
 
     @OneToOne

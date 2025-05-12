@@ -20,12 +20,12 @@ public class Passport {
     @Column(name = "id", nullable = false)
     Long id;
 
-    @NotBlank(message = "Serial may not be blank")
-    @Pattern(regexp = "^\\d{10}\\D", message = "Serial must be 10 digits followed by a non-digit")
+    @NotBlank(message = "Серийный номер должен быть не пустым")
+    @Pattern(regexp = "^\\d{10}\\D", message = "Серийный номер должен состоять из 10 цифр")
     String serial;
 
-    @NotBlank(message = "Number may not be blank")
-    @Pattern(regexp = "^\\d{10}\\D", message = "Number must be 10 digits followed by a non-digit")
+    @NotBlank(message = "Номер не должен быть пустым")
+    @Pattern(regexp = "^\\d{10}\\D", message = "Номер должен состоять из 10 цифр")
     String number;
 
     @Enumerated(EnumType.STRING)

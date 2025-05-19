@@ -7,25 +7,19 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 
-@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Passport {
-
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id", nullable = false)
     Long id;
 
-    @NotBlank(message = "Серийный номер должен быть не пустым")
-    @Pattern(regexp = "^\\d{10}\\D", message = "Серийный номер должен состоять из 10 цифр")
     String serial;
 
-    @NotBlank(message = "Номер не должен быть пустым")
-    @Pattern(regexp = "^\\d{10}\\D", message = "Номер должен состоять из 10 цифр")
     String number;
 
     @Enumerated(EnumType.STRING)
@@ -33,5 +27,41 @@ public class Passport {
 
     public enum Gender {
         MALE, FEMALE
+    }
+
+    public Passport(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 }

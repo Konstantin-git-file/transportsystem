@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
-@Data
+
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @NoArgsConstructor
@@ -19,6 +19,7 @@ public class Destination {
 
     @EqualsAndHashCode.Include
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     Long id;
 
@@ -29,6 +30,30 @@ public class Destination {
 
     public Destination(LocalDateTime localDateTime, CityAndStation cityAndStation) {
         this.localDateTime = localDateTime;
+        this.cityAndStation = cityAndStation;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
+    }
+
+    public CityAndStation getCityAndStation() {
+        return cityAndStation;
+    }
+
+    public void setCityAndStation(CityAndStation cityAndStation) {
         this.cityAndStation = cityAndStation;
     }
 }

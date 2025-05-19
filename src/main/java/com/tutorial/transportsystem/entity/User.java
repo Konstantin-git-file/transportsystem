@@ -5,28 +5,110 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "users")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
 
-    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long id;
+    @EqualsAndHashCode.Include
+    private Long id;
 
     @NotBlank(message = "Имя не должно быть пустым")
-    String firstname;
+    private String firstname;
 
     @NotBlank(message = "Фамилия не должна быть пустой")
-    String lastname;
+    private String lastname;
 
-    @OneToOne
-    Passport passport;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "passport_id", referencedColumnName = "id")
+    private Passport passport;
 
     @OneToOne
     @JoinColumn(name = "eticket_id")
-    Ticket ticket;
+    private Ticket ticket;
+
+    @Column(unique = true, nullable = false)
+    private String login;
+
+    private String password;
+
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    public User() {
+    }
+
+    public User(Long id, String firstname, String lastname, Passport passport, Ticket ticket) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.passport = passport;
+        this.ticket = ticket;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public Passport getPassport() {
+        return passport;
+    }
+
+    public void setPassport(Passport passport) {
+        this.passport = passport;
+    }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                '}';
+    }
 }

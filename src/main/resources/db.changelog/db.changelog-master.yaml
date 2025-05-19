@@ -1,148 +1,265 @@
 databaseChangeLog:
-    - changeSet:
-          id: 1
-          author: yourname
-          changes:
-              - createTable:
-                    tableName: user
-                    columns:
-                        - column:
-                              name: id
-                              type: bigint
-                              autoIncrement: true
-                              constraints:
-                                  primaryKey: true
-                        - column:
-                              name: firstname
-                              type: varchar(255)
-                              constraints:
-                                  nullable: false
-                        - column:
-                              name: lastname
-                              type: varchar(255)
-                              constraints:
-                                  nullable: false
-                        - column:
-                              name: passport_id
-                              type: bigint
-                        - column:
-                              name: eticket_id
-                              type: bigint
-              - createTable:
-                    tableName: passport
-                    columns:
-                        - column:
-                              name: id
-                              type: bigint
-                              autoIncrement: true
-                              constraints:
-                                  primaryKey: true
-                        - column:
-                              name: serial
-                              type: varchar(255)
-                              constraints:
-                                  nullable: false
-                        - column:
-                              name: number
-                              type: varchar(255)
-                              constraints:
-                                  nullable: false
-                        - column:
-                              name: gender
-                              type: varchar(255)
-              - createTable:
-                    tableName: ticket
-                    columns:
-                        - column:
-                              name: id
-                              type: bigint
-                              autoIncrement: true
-                              constraints:
-                                  primaryKey: true
-                        - column:
-                              name: user_id
-                              type: bigint
-                        - column:
-                              name: passport_id
-                              type: bigint
-                        - column:
-                              name: booked
-                              type: boolean
-                              defaultValue: false
-                        - column:
-                              name: paid
-                              type: boolean
-                              defaultValue: false
-                        - column:
-                              name: city_and_station
-                              type: varchar(255)
-                        - column:
-                              name: current_location_id
-                              type: bigint
-                        - column:
-                              name: destination_location_id
-                              type: bigint
-              - createTable:
-                    tableName: current_location
-                    columns:
-                        - column:
-                              name: id
-                              type: bigint
-                              constraints:
-                                  primaryKey: true
-                        - column:
-                              name: local_date_time
-                              type: timestamp
-                        - column:
-                              name: city_and_station
-                              type: varchar(255)
-              - createTable:
-                    tableName: destination
-                    columns:
-                        - column:
-                              name: id
-                              type: bigint
-                              constraints:
-                                  primaryKey: true
-                        - column:
-                              name: local_date_time
-                              type: timestamp
-                        - column:
-                              name: city_and_station
-                              type: varchar(255)
-              - addForeignKeyConstraint:
-                    baseTableName: user
-                    baseColumnNames: passport_id
-                    referencedTableName: passport
-                    referencedColumnNames: id
-                    constraintName: fk_user_passport
-              - addForeignKeyConstraint:
-                    baseTableName: user
-                    baseColumnNames: eticket_id
-                    referencedTableName: ticket
-                    referencedColumnNames: id
-                    constraintName: fk_user_ticket
-              - addForeignKeyConstraint:
-                    baseTableName: ticket
-                    baseColumnNames: user_id
-                    referencedTableName: user
-                    referencedColumnNames: id
-                    constraintName: fk_ticket_user
-              - addForeignKeyConstraint:
-                    baseTableName: ticket
-                    baseColumnNames: passport_id
-                    referencedTableName: passport
-                    referencedColumnNames: id
-                    constraintName: fk_ticket_passport
-              - addForeignKeyConstraint:
-                    baseTableName: ticket
-                    baseColumnNames: current_location_id
-                    referencedTableName: current_location
-                    referencedColumnNames: id
-                    constraintName: fk_ticket_current_location
-              - addForeignKeyConstraint:
-                    baseTableName: ticket
-                    baseColumnNames: destination_location_id
-                    referencedTableName: destination
-                    referencedColumnNames: id
-                    constraintName: fk_ticket_destination
+  - changeSet:
+      id: 1
+      author: yourname
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: firstname
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lastname
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: passport_id
+                  type: bigint
+              - column:
+                  name: eticket_id
+                  type: bigint
+        - createTable:
+            tableName: passport
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: serial
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: number
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: gender
+                  type: varchar(255)
+        - addForeignKeyConstraint:
+            baseTableName: users
+            baseColumnNames: passport_id
+            referencedTableName: passport
+            referencedColumnNames: id
+            constraintName: fk_users_passport
+        - addForeignKeyConstraint:
+            baseTableName: users
+            baseColumnNames: eticket_id
+            referencedTableName: ticket
+            referencedColumnNames: id
+            constraintName: fk_users_ticket
+        - addForeignKeyConstraint:
+            baseTableName: ticket
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_ticket_users
+        - addForeignKeyConstraint:
+            baseTableName: ticket
+            baseColumnNames: passport_id
+            referencedTableName: passport
+            referencedColumnNames: id
+            constraintName: fk_ticket_passport
+        - addForeignKeyConstraint:
+            baseTableName: ticket
+            baseColumnNames: current_location_id
+            referencedTableName: current_location
+            referencedColumnNames: id
+            constraintName: fk_ticket_current_location
+        - addForeignKeyConstraint:
+            baseTableName: ticket
+            baseColumnNames: destination_location_id
+            referencedTableName: destination
+            referencedColumnNames: id
+            constraintName: fk_ticket_destination
+
+  - changeSet:
+      id: add-login-password-fields
+      author: yourname
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: login
+                  type: varchar(255)
+                  valueComputed: "'default_login_' || id"
+                  constraints:
+                    nullable: true
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: password
+                  type: varchar(255)
+                  value: "default_password"
+                  constraints:
+                    nullable: true
+        - createIndex:
+            indexName: idx_users_login
+            tableName: users
+            unique: true
+            columns:
+              - column:
+                  name: login
+                  type: varchar(255)
+
+  - changeSet:
+      id: populate-default-values
+      author: yourname
+      changes:
+        - update:
+            tableName: users
+            columns:
+              - column:
+                  name: login
+                  valueComputed: "'default_login_' || id"
+            where: login IS NULL OR login = ''
+        - update:
+            tableName: users
+            columns:
+              - column:
+                  name: password
+                  value: "default_password"
+            where: password IS NULL OR password = ''
+
+  - changeSet:
+      id: make-login-password-non-null
+      author: yourname
+      changes:
+        - addNotNullConstraint:
+            tableName: users
+            columnName: login
+            columnDataType: varchar(255)
+        - addNotNullConstraint:
+            tableName: users
+            columnName: password
+            columnDataType: varchar(255)
+        - dropDefaultValue:
+            tableName: users
+            columnName: login
+            columnDataType: varchar(255)
+        - dropDefaultValue:
+            tableName: users
+            columnName: password
+            columnDataType: varchar(255)
+
+  - changeSet:
+      id: 2
+      author: yourname
+      changes:
+        - createTable:
+            tableName: current_location
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: local_date_time
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city_and_station
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: destination
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: local_date_time
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: city_and_station
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: ticket
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: passport_id
+                  type: bigint
+                  constraints:
+                    nullable: true
+              - column:
+                  name: current_location_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: destination_location_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 3
+      author: yourname
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: ticket
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            constraintName: fk_ticket_users
+        - addForeignKeyConstraint:
+            baseTableName: ticket
+            baseColumnNames: passport_id
+            referencedTableName: passport
+            referencedColumnNames: id
+            constraintName: fk_ticket_passport
+        - addForeignKeyConstraint:
+            baseTableName: ticket
+            baseColumnNames: current_location_id
+            referencedTableName: current_location
+            referencedColumnNames: id
+            constraintName: fk_ticket_current_location
+        - addForeignKeyConstraint:
+            baseTableName: ticket
+            baseColumnNames: destination_location_id
+            referencedTableName: destination
+            referencedColumnNames: id
+            constraintName: fk_ticket_destination

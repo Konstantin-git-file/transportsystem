@@ -1,5 +1,6 @@
 package com.tutorial.transportsystem.controllers;
 
+import com.tutorial.transportsystem.dto.LoginDTO;
 import com.tutorial.transportsystem.dto.UserDTO;
 import com.tutorial.transportsystem.entity.User;
 import com.tutorial.transportsystem.mapper.UserMapper;
@@ -13,13 +14,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,6 +36,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final KafkaTemplate<String, UserDTO> kafkaTemplate;
+    private final PasswordEncoder passwordEncoder;
 
     @Operation(summary = "Получить список пользователей", description = "Возвращает постраничный список пользователей с возможностью фильтрации по lastname")
     @ApiResponses(value = {
@@ -95,18 +101,96 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Некорректные входные данные")
     })
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDTO, BindingResult result) {
         log.info("Получен запрос: POST /api/users — создать пользователя");
         log.debug("Входящий DTO: {}", userDTO);
 
-        User saved = userRepository.save(userMapper.toEntity(userDTO));
-        UserDTO savedDTO = userMapper.toDto(saved);
+        if (result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            result.getFieldErrors().forEach(error ->
+                    errors.put(error.getField(), error.getDefaultMessage()));
+            log.warn("Ошибки валидации при создании пользователя: {}", errors);
+            return ResponseEntity.badRequest().body(errors);
+        }
 
-        kafkaTemplate.send("user-updates", String.valueOf(saved.getId()), savedDTO);
-        log.info("Пользователь успешно создан с ID={}", saved.getId());
-        return ResponseEntity.ok(savedDTO);
+        if (userRepository.existsByLogin(userDTO.getLogin())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Логин уже занят");
+        }
+
+        try {
+            User user = userMapper.toEntity(userDTO);
+            String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+            user.setPassword(encodedPassword);
+            log.debug("После маппинга: user.passport = {}, user.password = {}", user.getPassport(), user.getPassword());
+
+            User saved = userRepository.save(user);
+            UserDTO savedDTO = userMapper.toDto(saved);
+
+            log.info("Пользователь успешно создан с ID={}", saved.getId());
+            return ResponseEntity.ok(savedDTO);
+        } catch (Exception e) {
+            log.error("Ошибка при сохранении пользователя", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ошибка сервера: " + e.getMessage());
+        }
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody UserDTO userDTO, BindingResult result) {
+        log.info("Получен запрос: POST /api/users/register — зарегистрировать пользователя");
+
+        if (result.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            result.getFieldErrors().forEach(error ->
+                    errors.put(error.getField(), error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(errors);
+        }
+
+        if (userRepository.existsByLogin(userDTO.getLogin())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Логин уже занят");
+        }
+
+        try {
+            User user = userMapper.toEntity(userDTO);
+            String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+            user.setPassword(encodedPassword);
+            User saved = userRepository.save(user);
+            UserDTO savedDTO = userMapper.toDto(saved);
+
+            log.info("Пользователь успешно зарегистрирован с ID={}", saved.getId());
+            return ResponseEntity.ok(savedDTO);
+        } catch (Exception e) {
+            log.error("Ошибка при регистрации пользователя", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Ошибка сервера: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
+        log.info("Получен запрос: POST /api/users/login — попытка входа");
+        log.debug("Входящие данные для входа: {}", loginDTO);
+
+        Optional<User> optionalUser = userRepository.findByLogin(loginDTO.getLogin());
+
+        if (optionalUser.isEmpty()) {
+            log.warn("Вход не выполнен: пользователь с логином {} не найден", loginDTO.getLogin());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Неверные учетные данные");
+        }
+
+        User user = optionalUser.get();
+        boolean passwordMatches = passwordEncoder.matches(loginDTO.getPassword(), user.getPassword());
+
+        if (!passwordMatches) {
+            log.warn("Вход не выполнен: неверный пароль для пользователя '{}'", user.getLogin());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Неверные учетные данные");
+        }
+
+        Long userId = user.getId();
+        log.info("Пользователь '{}' успешно вошёл. ID пользователя: {}", user.getLogin(), userId);
+
+        return ResponseEntity.ok().body(Map.of("userId", userId));
+    }
     @Operation(summary = "Обновить пользователя", description = "Обновляет существующего пользователя по указанному ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Пользователь успешно обновлён"),

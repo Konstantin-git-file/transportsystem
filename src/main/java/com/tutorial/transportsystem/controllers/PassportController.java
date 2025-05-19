@@ -134,4 +134,25 @@ public class PassportController {
                     return ResponseEntity.notFound().build();
                 });
     }
+
+    @Operation(summary = "Удалить паспорт", description = "Удаляет паспорт по указанному ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Паспорт успешно удалён"),
+            @ApiResponse(responseCode = "404", description = "Паспорт не найден")
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePassport(@PathVariable Long id) {
+        log.info("Получен запрос: DELETE /api/passports/{} — удалить паспорт", id);
+
+        if (!passportRepository.existsById(id)) {
+            log.warn("Попытка удаления несуществующего паспорта с ID={}", id);
+            return ResponseEntity.notFound().build();
+        }
+
+        passportRepository.deleteById(id);
+        kafkaTemplate.send("passport-deletions", String.valueOf(id), null); // или отправка события об удалении
+        log.info("Паспорт с ID={} успешно удалён", id);
+
+        return ResponseEntity.noContent().build();
+    }
 }

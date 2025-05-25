@@ -1,9 +1,30 @@
 package com.tutorial.transportsystem.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class UserDTO {
     private Long id;
+
+    @NotBlank(message = "Имя не должно быть пустым")
+    private String firstname;
+
+    @NotBlank(message = "Фамилия не должна быть пустой")
+    private String lastname;
+
+    private PassportDTO passport;
+
+    private Long ticketId;
+
+    @NotBlank(message = "Логин не должен быть пустым")
+    private String login;
+
+    @NotBlank(message = "Пароль не должен быть пустым")
+    private String password;
+
+    @NotBlank(message = "Email не должен быть пустым")
+    @Email(message = "Некорректный формат email")
+    private String email;
 
     public Long getId() {
         return id;
@@ -61,21 +82,11 @@ public class UserDTO {
         this.password = password;
     }
 
-    @NotBlank(message = "Имя не должно быть пустым")
-    private String firstname;
+    public String getEmail() {
+        return email;
+    }
 
-    @NotBlank(message = "Фамилия не должна быть пустой")
-    private String lastname;
-
-    private PassportDTO passport;
-
-    private Long ticketId;
-
-    @NotBlank(message = "Логин не должен быть пустым")
-    private String login;
-
-    @NotBlank(message = "Пароль не должен быть пустым")
-    private String password;
-
-
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

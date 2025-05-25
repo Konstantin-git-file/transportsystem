@@ -8,7 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    Page<User> findByLastnameContainingIgnoreCase(String lastname, Pageable pageable);
     boolean existsByLogin(String login);
     Optional<User> findByLogin(String login);
+    boolean existsByEmail(String email);
+    Page<User> findAllByLastnameContainingIgnoreCase(String lastname, Pageable pageable);
 }

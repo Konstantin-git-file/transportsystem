@@ -1,5 +1,4 @@
 package com.tutorial.transportsystem.controllers;
-
 import com.tutorial.transportsystem.entity.Destination;
 import com.tutorial.transportsystem.repository.DestinationRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,7 +24,7 @@ public class DestinationController {
 
     private final DestinationRepository destinationRepository;
 
-    @Operation(summary = "Получить список пунктов назначения", description = "Возвращает список всех пунктов назначения с их ID и названиями")
+    @Operation(summary = "Получить список пунктов назначения", description = "Возвращает список всех пунктов назначения с их ID, городами и станциями")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Список пунктов назначения успешно возвращён")
     })
@@ -37,8 +36,8 @@ public class DestinationController {
                 .map(destination -> {
                     Map<String, Object> map = new HashMap<>();
                     map.put("id", destination.getId());
-                    map.put("stationName", destination.getCityAndStation().name());
-                    map.put("city", destination.getCityAndStation().getCity());
+                    map.put("city", destination.getCity());
+                    map.put("station", destination.getStation().name());
                     return map;
                 })
                 .collect(Collectors.toList());

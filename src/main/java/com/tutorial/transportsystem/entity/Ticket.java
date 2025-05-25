@@ -13,6 +13,7 @@ import lombok.AccessLevel;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Ticket {
+
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -28,19 +29,23 @@ public class Ticket {
     Passport passport;
 
     boolean booked;
-
     boolean paid;
 
     @Enumerated(EnumType.STRING)
-    CityAndStation cityAndStation;
+    @Column(nullable = false)
+    City fromCity;
 
-    @OneToOne
-    @JoinColumn(name = "current_location_id")
-    CurrentLocation currentLocation;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    Station fromStation;
 
-    @OneToOne
-    @JoinColumn(name = "destination_location_id")
-    Destination destination;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    City toCity;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    Station toStation;
 
     public Ticket(Long id) {
         this.id = id;
@@ -86,27 +91,35 @@ public class Ticket {
         this.paid = paid;
     }
 
-    public CityAndStation getCityAndStation() {
-        return cityAndStation;
+    public City getFromCity() {
+        return fromCity;
     }
 
-    public void setCityAndStation(CityAndStation cityAndStation) {
-        this.cityAndStation = cityAndStation;
+    public void setFromCity(City fromCity) {
+        this.fromCity = fromCity;
     }
 
-    public CurrentLocation getCurrentLocation() {
-        return currentLocation;
+    public Station getFromStation() {
+        return fromStation;
     }
 
-    public void setCurrentLocation(CurrentLocation currentLocation) {
-        this.currentLocation = currentLocation;
+    public void setFromStation(Station fromStation) {
+        this.fromStation = fromStation;
     }
 
-    public Destination getDestination() {
-        return destination;
+    public City getToCity() {
+        return toCity;
     }
 
-    public void setDestination(Destination destination) {
-        this.destination = destination;
+    public void setToCity(City toCity) {
+        this.toCity = toCity;
+    }
+
+    public Station getToStation() {
+        return toStation;
+    }
+
+    public void setToStation(Station toStation) {
+        this.toStation = toStation;
     }
 }

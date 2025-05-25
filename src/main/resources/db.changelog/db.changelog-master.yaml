@@ -263,3 +263,163 @@ databaseChangeLog:
             referencedTableName: destination
             referencedColumnNames: id
             constraintName: fk_ticket_destination
+  - changeSet:
+      id: add-email-to-users
+      author: yourname
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+        - update:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  valueComputed: "'default_' || id || '@example.com'"
+            where: email IS NULL
+        - addNotNullConstraint:
+            tableName: users
+            columnName: email
+            columnDataType: varchar(255)
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: email
+            constraintName: uq_users_email
+  - changeSet:
+      id: add-new-columns-for-city-and-station
+      author: yourname
+      changes:
+        # Для таблицы current_location
+        - addColumn:
+            tableName: current_location
+            columns:
+              - column:
+                  name: station
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+        - update:
+            tableName: current_location
+            columns:
+              - column:
+                  name: station
+                  value: "ЛЕНИНГРАДСКИЙ"  # Значение по умолчанию
+            where: station IS NULL
+        - addNotNullConstraint:
+            tableName: current_location
+            columnName: station
+            columnDataType: varchar(255)
+
+        # Для таблицы destination
+        - addColumn:
+            tableName: destination
+            columns:
+              - column:
+                  name: city
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+        - addColumn:
+            tableName: destination
+            columns:
+              - column:
+                  name: station
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+        - update:
+            tableName: destination
+            columns:
+              - column:
+                  name: city
+                  value: "МОСКВА"  # Значение по умолчанию
+            where: city IS NULL
+        - update:
+            tableName: destination
+            columns:
+              - column:
+                  name: station
+                  value: "ЛЕНИНГРАДСКИЙ"  # Значение по умолчанию
+            where: station IS NULL
+        - addNotNullConstraint:
+            tableName: destination
+            columnName: city
+            columnDataType: varchar(255)
+        - addNotNullConstraint:
+            tableName: destination
+            columnName: station
+            columnDataType: varchar(255)
+
+        # Для таблицы ticket
+        - addColumn:
+            tableName: ticket
+            columns:
+              - column:
+                  name: from_city
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: from_station
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: to_city
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: to_station
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+        - update:
+            tableName: ticket
+            columns:
+              - column:
+                  name: from_city
+                  value: "МОСКВА"  # Значение по умолчанию
+            where: from_city IS NULL
+        - update:
+            tableName: ticket
+            columns:
+              - column:
+                  name: from_station
+                  value: "ЛЕНИНГРАДСКИЙ"  # Значение по умолчанию
+            where: from_station IS NULL
+        - update:
+            tableName: ticket
+            columns:
+              - column:
+                  name: to_city
+                  value: "САНКТ_ПЕТЕРБУРГ"  # Значение по умолчанию
+            where: to_city IS NULL
+        - update:
+            tableName: ticket
+            columns:
+              - column:
+                  name: to_station
+                  value: "МОСКОВСКИЙ"  # Значение по умолчанию
+            where: to_station IS NULL
+        - addNotNullConstraint:
+            tableName: ticket
+            columnName: from_city
+            columnDataType: varchar(255)
+        - addNotNullConstraint:
+            tableName: ticket
+            columnName: from_station
+            columnDataType: varchar(255)
+        - addNotNullConstraint:
+            tableName: ticket
+            columnName: to_city
+            columnDataType: varchar(255)
+        - addNotNullConstraint:
+            tableName: ticket
+            columnName: to_station
+            columnDataType: varchar(255)

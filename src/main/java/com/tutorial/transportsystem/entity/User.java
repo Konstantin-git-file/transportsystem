@@ -1,6 +1,7 @@
 package com.tutorial.transportsystem.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -32,36 +33,12 @@ public class User {
     @Column(unique = true, nullable = false)
     private String login;
 
+    @NotBlank(message = "Пароль не должен быть пустым")
     private String password;
 
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
-    public User() {
-    }
-
-    public User(Long id, String firstname, String lastname, Passport passport, Ticket ticket) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.passport = passport;
-        this.ticket = ticket;
-    }
+    @NotBlank(message = "Email не должен быть пустым")
+    @Email(message = "Некорректный формат email")
+    private String email;
 
     public Long getId() {
         return id;
@@ -100,6 +77,41 @@ public class User {
     }
 
     public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public User() {
+    }
+
+    public User(Long id, String firstname, String lastname, Passport passport, Ticket ticket) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.passport = passport;
         this.ticket = ticket;
     }
 

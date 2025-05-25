@@ -4,6 +4,9 @@ public class LoginDTO {
     private String login;
     private String password;
 
+    public LoginDTO(String user, String wrong) {
+    }
+
     public String getPassword() {
         return password;
     }

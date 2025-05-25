@@ -25,7 +25,7 @@ public class CurrentLocationController {
 
     private final CurrentLocationRepository currentLocationRepository;
 
-    @Operation(summary = "Получить список станций отправления", description = "Возвращает список всех станций отправления с их ID и названиями")
+    @Operation(summary = "Получить список станций отправления", description = "Возвращает список всех станций отправления с их ID, городом и станцией")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Список станций успешно возвращён")
     })
@@ -37,14 +37,13 @@ public class CurrentLocationController {
                 .map(location -> {
                     Map<String, Object> map = new HashMap<>();
                     map.put("id", location.getId());
-                    map.put("stationName", location.getCityAndStation().name());
-                    map.put("city", location.getCityAndStation().getCity());
+                    map.put("city", location.getCity());
+                    map.put("station", location.getStation());
                     return map;
                 })
                 .collect(Collectors.toList());
 
         log.info("Найдено {} станций отправления", locations.size());
-        locations.forEach(loc -> log.info("Станция: {}", loc));
         return ResponseEntity.ok(locations);
     }
 }

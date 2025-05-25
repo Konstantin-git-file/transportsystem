@@ -1,16 +1,9 @@
 package com.tutorial.transportsystem.entity;
-
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
-
-
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
@@ -27,15 +20,20 @@ public class CurrentLocation {
     LocalDateTime localDateTime;
 
     @Enumerated(EnumType.STRING)
-    CityAndStation cityAndStation;
+    @Column(nullable = false)
+    City city;
 
-    String city;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    Station station;
 
-    public CurrentLocation(LocalDateTime localDateTime, CityAndStation cityAndStation) {
+    public CurrentLocation(LocalDateTime localDateTime, City city, Station station) {
         this.localDateTime = localDateTime;
-        this.cityAndStation = cityAndStation;
+        this.city = city;
+        this.station = station;
     }
 
+    // геттеры и сеттеры
     public Long getId() {
         return id;
     }
@@ -52,19 +50,19 @@ public class CurrentLocation {
         this.localDateTime = localDateTime;
     }
 
-    public CityAndStation getCityAndStation() {
-        return cityAndStation;
-    }
-
-    public void setCityAndStation(CityAndStation cityAndStation) {
-        this.cityAndStation = cityAndStation;
-    }
-
-    public String getCity() {
+    public City getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(City city) {
         this.city = city;
+    }
+
+    public Station getStation() {
+        return station;
+    }
+
+    public void setStation(Station station) {
+        this.station = station;
     }
 }

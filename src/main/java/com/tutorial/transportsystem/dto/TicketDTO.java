@@ -1,25 +1,31 @@
 package com.tutorial.transportsystem.dto;
-
-import com.tutorial.transportsystem.entity.CityAndStation;
+import com.tutorial.transportsystem.entity.City;
+import com.tutorial.transportsystem.entity.Station;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
-
 
 public class TicketDTO {
+
     private Long id;
 
     @NotNull(message = "ID пользователя не должен быть пустым")
     private Long userId;
 
-    @NotNull(message = "ID текущей локации не должен быть пустым")
-    private Long locationId;
-
-    @NotNull(message = "ID пункта назначения не должен быть пустым")
-    private Long destinationId;
-
     private boolean booked;
     private boolean paid;
-    private CityAndStation cityAndStation;
+
+    @NotNull(message = "Город отправления обязателен")
+    private City fromCity;
+
+    @NotNull(message = "Станция отправления обязательна")
+    private Station fromStation;
+
+    @NotNull(message = "Город назначения обязателен")
+    private City toCity;
+
+    @NotNull(message = "Станция назначения обязательна")
+    private Station toStation;
+
+    // геттеры и сеттеры
 
     public Long getId() {
         return id;
@@ -35,22 +41,6 @@ public class TicketDTO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public Long getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(Long locationId) {
-        this.locationId = locationId;
-    }
-
-    public Long getDestinationId() {
-        return destinationId;
-    }
-
-    public void setDestinationId(Long destinationId) {
-        this.destinationId = destinationId;
     }
 
     public boolean isBooked() {
@@ -69,11 +59,35 @@ public class TicketDTO {
         this.paid = paid;
     }
 
-    public CityAndStation getCityAndStation() {
-        return cityAndStation;
+    public City getFromCity() {
+        return fromCity;
     }
 
-    public void setCityAndStation(CityAndStation cityAndStation) {
-        this.cityAndStation = cityAndStation;
+    public void setFromCity(City fromCity) {
+        this.fromCity = fromCity;
+    }
+
+    public Station getFromStation() {
+        return fromStation;
+    }
+
+    public void setFromStation(Station fromStation) {
+        this.fromStation = fromStation;
+    }
+
+    public City getToCity() {
+        return toCity;
+    }
+
+    public void setToCity(City toCity) {
+        this.toCity = toCity;
+    }
+
+    public Station getToStation() {
+        return toStation;
+    }
+
+    public void setToStation(Station toStation) {
+        this.toStation = toStation;
     }
 }

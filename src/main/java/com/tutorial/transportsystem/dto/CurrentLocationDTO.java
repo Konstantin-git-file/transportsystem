@@ -1,15 +1,15 @@
 package com.tutorial.transportsystem.dto;
 
-import com.tutorial.transportsystem.entity.CityAndStation;
-import lombok.Data;
+import com.tutorial.transportsystem.entity.City;
+import com.tutorial.transportsystem.entity.Station;
 
 import java.time.LocalDateTime;
-
 
 public class CurrentLocationDTO {
     private Long id;
     private LocalDateTime localDateTime;
-    private CityAndStation cityAndStation;
+    private City city;
+    private Station station;
 
     public Long getId() {
         return id;
@@ -27,11 +27,19 @@ public class CurrentLocationDTO {
         this.localDateTime = localDateTime;
     }
 
-    public CityAndStation getCityAndStation() {
-        return cityAndStation;
+    public City getCity() {
+        return city;
     }
 
-    public void setCityAndStation(CityAndStation cityAndStation) {
-        this.cityAndStation = cityAndStation;
+    public void setCity(City city) {
+        this.city = city;
+    }
+
+    public Station getStation() {
+        return station;
+    }
+
+    public void setStation(Station station) {
+        this.station = station;
     }
 }

@@ -1,26 +1,18 @@
 package com.tutorial.transportsystem.controllers;
-
 import com.tutorial.transportsystem.dto.PassportDTO;
-import com.tutorial.transportsystem.entity.Passport;
-import com.tutorial.transportsystem.mapper.UserMapper;
-import com.tutorial.transportsystem.repository.PassportRepository;
+import com.tutorial.transportsystem.service.PassportService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/passports")
@@ -28,9 +20,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PassportController {
 
-    private final PassportRepository passportRepository;
-    private final UserMapper userMapper;
-    private final KafkaTemplate<String, PassportDTO> kafkaTemplate;
+    private final PassportService passportService;
 
     @Operation(summary = "Получить список паспортов", description = "Возвращает постраничный список паспортов с возможностью фильтрации по serial")
     @ApiResponses(value = {
@@ -49,22 +39,15 @@ public class PassportController {
             return ResponseEntity.badRequest().build();
         }
 
-        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id"));
-        Page<Passport> passportPage = serial != null && !serial.isEmpty()
-                ? passportRepository.findBySerialContainingIgnoreCase(serial, pageRequest)
-                : passportRepository.findAll(pageRequest);
-
-        List<PassportDTO> passportDTOs = passportPage.getContent().stream()
-                .map(userMapper::toDto)
-                .collect(Collectors.toList());
+        List<PassportDTO> passportDTOs = passportService.getAll(page, size, serial);
 
         Map<String, Object> response = new HashMap<>();
         response.put("passports", passportDTOs);
-        response.put("currentPage", passportPage.getNumber());
-        response.put("totalItems", passportPage.getTotalElements());
-        response.put("totalPages", passportPage.getTotalPages());
+        response.put("currentPage", page);
+        response.put("totalItems", passportDTOs.size());
+        response.put("totalPages", (int) Math.ceil((double) passportDTOs.size() / size));
 
-        log.info("Найдено {} паспорт(ов), страница {}/{}", passportDTOs.size(), page, passportPage.getTotalPages());
+        log.info("Найдено {} паспорт(ов), страница {}", passportDTOs.size(), page);
         return ResponseEntity.ok(response);
     }
 
@@ -77,16 +60,14 @@ public class PassportController {
     public ResponseEntity<PassportDTO> getPassportById(@PathVariable Long id) {
         log.info("Получен запрос: GET /api/passports/{} — получить паспорт по ID", id);
 
-        return passportRepository.findById(id)
-                .map(userMapper::toDto)
-                .map(dto -> {
-                    log.info("Паспорт с ID={} найден: {}", id, dto);
-                    return ResponseEntity.ok(dto);
-                })
-                .orElseGet(() -> {
-                    log.warn("Паспорт с ID={} не найден", id);
-                    return ResponseEntity.notFound().build();
-                });
+        try {
+            PassportDTO dto = passportService.getById(id);
+            log.info("Паспорт с ID={} найден", id);
+            return ResponseEntity.ok(dto);
+        } catch (Exception e) {
+            log.warn("Паспорт с ID={} не найден", id);
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation(summary = "Создать новый паспорт", description = "Создаёт новый паспорт на основе переданных данных")
@@ -99,11 +80,8 @@ public class PassportController {
         log.info("Получен запрос: POST /api/passports — создать паспорт");
         log.debug("Входящий DTO: {}", passportDTO);
 
-        Passport saved = passportRepository.save(userMapper.toEntity(passportDTO));
-        PassportDTO savedDTO = userMapper.toDto(saved);
-
-        kafkaTemplate.send("passport-updates", String.valueOf(saved.getId()), savedDTO);
-        log.info("Паспорт успешно создан с ID={}", saved.getId());
+        PassportDTO savedDTO = passportService.create(passportDTO);
+        log.info("Паспорт успешно создан с ID={}", savedDTO.getId());
         return ResponseEntity.ok(savedDTO);
     }
 
@@ -118,21 +96,14 @@ public class PassportController {
         log.info("Получен запрос: PUT /api/passports/{} — обновить паспорт", id);
         log.debug("Входящий DTO: {}", passportDTO);
 
-        return passportRepository.findById(id)
-                .map(existing -> {
-                    Passport updated = userMapper.toEntity(passportDTO);
-                    updated.setId(id);
-                    Passport saved = passportRepository.save(updated);
-                    PassportDTO savedDTO = userMapper.toDto(saved);
-
-                    kafkaTemplate.send("passport-updates", String.valueOf(id), savedDTO);
-                    log.info("Паспорт с ID={} успешно обновлён", id);
-                    return ResponseEntity.ok(savedDTO);
-                })
-                .orElseGet(() -> {
-                    log.warn("Обновление невозможно: паспорт с ID={} не найден", id);
-                    return ResponseEntity.notFound().build();
-                });
+        try {
+            PassportDTO updatedDTO = passportService.update(id, passportDTO);
+            log.info("Паспорт с ID={} успешно обновлён", id);
+            return ResponseEntity.ok(updatedDTO);
+        } catch (Exception e) {
+            log.warn("Обновление невозможно: паспорт с ID={} не найден", id);
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @Operation(summary = "Удалить паспорт", description = "Удаляет паспорт по указанному ID")
@@ -144,15 +115,13 @@ public class PassportController {
     public ResponseEntity<Void> deletePassport(@PathVariable Long id) {
         log.info("Получен запрос: DELETE /api/passports/{} — удалить паспорт", id);
 
-        if (!passportRepository.existsById(id)) {
-            log.warn("Попытка удаления несуществующего паспорта с ID={}", id);
+        try {
+            passportService.delete(id);
+            log.info("Паспорт с ID={} успешно удалён", id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            log.warn("Удаление невозможно: паспорт с ID={} не найден", id);
             return ResponseEntity.notFound().build();
         }
-
-        passportRepository.deleteById(id);
-        kafkaTemplate.send("passport-deletions", String.valueOf(id), null); // или отправка события об удалении
-        log.info("Паспорт с ID={} успешно удалён", id);
-
-        return ResponseEntity.noContent().build();
     }
 }
